@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>I'm Sorry, Nidhi ❤️</title>
+<style>
+body{font-family:Arial,sans-serif;background:#fff5f7;margin:0;color:#333;overflow-x:hidden}
+html{scroll-behavior:smooth}
+.hero{height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.btn{background:#ff5f92;color:#fff;border:none;padding:14px 24px;border-radius:30px;cursor:pointer}
+.letter{max-width:800px;margin:40px auto;padding:30px;background:#fff;border-radius:20px;box-shadow:0 4px 20px rgba(0,0,0,.1)}
+#typewriter{white-space:pre-line;line-height:1.8}
+.forgive{text-align:center;padding:80px 20px;position:relative;min-height:300px}
+#noBtn{position:absolute;left:50%;top:140px;transform:translateX(-50%);padding:12px 20px;border-radius:30px;border:none;opacity:0;visibility:hidden}
+#celebration.hidden{display:none!important}
+#celebration{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center}
+.popup{background:#fff;padding:30px;border-radius:20px;text-align:center}
+.heart{position:fixed;bottom:-20px;animation:float 8s linear forwards}
+@keyframes float{to{transform:translateY(-120vh);opacity:0}}
+</style></head><body>
+<section class="hero">
+<h1>I'm Sorry, Nidhi ❤️</h1>
+<p>Some words deserve more than a text message.</p>
+<button class="btn" id="readLetterBtn">Read My Letter ❤️</button>
+</section>
+
+<section class="letter" id="letterCard">
+<h2>Dear Nidhi Ji,</h2>
+<div id="typewriter"></div>
+</section>
+
+<section class="forgive">
+<h2>So... will you forgive me? 🥺</h2>
+<button class="btn" id="yesBtn">Yes, I forgive you ❤️</button>
+<button id="noBtn">No 😅</button>
+</section>
+
+<div id="celebration" class="hidden"><div class="popup">
+<h2>You are my whole heart ❤️</h2>
+<p>Thank you for giving me another chance.</p>
+<p>With gratitude,<br>Ashu ❤️</p>
+<button class="btn" onclick="closePopup()">Close</button>
+</div></div>
+
+<script>
+document.getElementById('readLetterBtn').onclick=()=>document.getElementById('letterCard').scrollIntoView({behavior:'smooth'});
+
+const text=`There is a very fine line between a joke and vulgarity, and unfortunately I crossed that line without realizing it.
+
+I feel that it may have affected the way you think about me, and that is something I truly regret.
+
+I was wrong, and I have no hesitation in admitting it.
+
+The truth is that I become very comfortable around you, just as I am with my closest friends. However, that comfort does not justify my mistake.
+
+I am genuinely sorry for what I said.
+
+Please forgive me if I hurt you or wasted even a small amount of your precious time. I promise that was never my intention. 💕
+
+With love and respect,
+Ashu ❤️`;
+
+let i=0;const tw=document.getElementById('typewriter');
+new IntersectionObserver(e=>{if(e[0].isIntersecting){(function t(){if(i<text.length){tw.innerHTML+=text[i++];setTimeout(t,25)}})();}},{threshold:.3}).observe(document.getElementById('letterCard'));
+
+const noBtn=document.getElementById('noBtn');
+new IntersectionObserver(e=>{if(e[0].isIntersecting){noBtn.style.opacity=1;noBtn.style.visibility='visible';}}).observe(document.querySelector('.forgive'));
+
+const noTexts=["No 😅","One more chance? 🥺","Pretty please? 🌸","Please hear me out ❤️","I really mean it 💕","Forgive me? ❤️","Don't be angry 😭","Just one chance 💖","Please? 🥺❤️"];
+let idx=0;
+function escapeBtn(){
+noBtn.style.left=Math.random()*(window.innerWidth-220)+'px';
+noBtn.style.top=(80+Math.random()*220)+'px';
+idx=(idx+1)%noTexts.length;
+noBtn.innerHTML=noTexts[idx];
+}
+noBtn.addEventListener('mouseenter',escapeBtn);
+document.addEventListener('mousemove',e=>{
+const r=noBtn.getBoundingClientRect();
+const d=Math.hypot(r.left+r.width/2-e.clientX,r.top+r.height/2-e.clientY);
+if(d<120) escapeBtn();
+});
+
+document.getElementById('yesBtn').onclick=()=>document.getElementById('celebration').classList.remove('hidden');
+function closePopup(){document.getElementById('celebration').classList.add('hidden');}
+
+let mouseX=0;document.addEventListener('mousemove',e=>mouseX=e.clientX);
+setInterval(()=>{
+const h=document.createElement('div');
+h.className='heart';h.textContent=Math.random()>.5?'❤️':'💖';
+h.style.left=(Math.random()*100+(mouseX/window.innerWidth-.5)*10)+'vw';
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),8000);
+},300);
+</script>
+</body></html>
